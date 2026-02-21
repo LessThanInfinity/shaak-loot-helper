@@ -1,0 +1,17 @@
+{
+  "SHAAK_LOOT.Settings.DefaultName.Name": "Default Container Name",
+  "SHAAK_LOOT.Settings.DefaultName.Hint": "The default name assigned to new loot containers when placed on a scene.",
+  "SHAAK_LOOT.Settings.ImageFolder.Name": "Token Image Folder",
+  "SHAAK_LOOT.Settings.ImageFolder.Hint": "Path to a folder containing container token images. Leave empty to use the bundled defaults. Example: my-images/containers",
+  "SHAAK_LOOT.Settings.PlacementMode.Name": "Placement Mode",
+  "SHAAK_LOOT.Settings.PlacementMode.Hint": "Silent: drops the container immediately with default settings. Dialog: shows a popup to customize name and image before placing.",
+  "SHAAK_LOOT.Settings.PlacementMode.Silent": "Silent (instant placement)",
+  "SHAAK_LOOT.Settings.PlacementMode.Dialog": "Dialog (customize before placing)",
+  "SHAAK_LOOT.Dialog.Title": "Place Loot Container",
+  "SHAAK_LOOT.Dialog.NameLabel": "Container Name",
+  "SHAAK_LOOT.Dialog.NamePlaceholder": "Container",
+  "SHAAK_LOOT.Dialog.ImageLabel": "Token Image",
+  "SHAAK_LOOT.Dialog.BrowseImage": "Browse for image",
+  "SHAAK_LOOT.Dialog.PlaceButton": "Place",
+  "SHAAK_LOOT.Dialog.CancelButton": "Cancel"
+}

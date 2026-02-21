@@ -1,0 +1,36 @@
+{
+  "id": "shaak-loot-helper",
+  "title": "Shaak's Loot Helper",
+  "description": "Quickly place independent loot container tokens on scenes with random images and automatic actor creation. Designed for PF2e.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Shaak"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/shaak-loot-helper.mjs"
+  ],
+  "styles": [
+    "styles/shaak-loot-helper.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ]
+}

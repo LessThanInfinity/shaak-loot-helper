@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <!-- Shadow -->
+  <ellipse cx="140" cy="150" rx="115" ry="105" fill="rgba(0,0,0,0.15)"/>
+  <!-- Crate body (top-down view) -->
+  <rect x="55" y="60" width="170" height="160" rx="4" fill="#C19A6B"/>
+  <!-- Wood plank lines -->
+  <line x1="55" y1="100" x2="225" y2="100" stroke="#A0784C" stroke-width="2"/>
+  <line x1="55" y1="140" x2="225" y2="140" stroke="#A0784C" stroke-width="2"/>
+  <line x1="55" y1="180" x2="225" y2="180" stroke="#A0784C" stroke-width="2"/>
+  <!-- Cross boards -->
+  <line x1="55" y1="60" x2="225" y2="220" stroke="#8B6914" stroke-width="10" opacity="0.5"/>
+  <line x1="225" y1="60" x2="55" y2="220" stroke="#8B6914" stroke-width="10" opacity="0.5"/>
+  <!-- Border/frame -->
+  <rect x="55" y="60" width="170" height="160" rx="4" fill="none" stroke="#8B6914" stroke-width="4"/>
+  <!-- Nails at corners -->
+  <circle cx="65" cy="70" r="4" fill="#808080"/>
+  <circle cx="215" cy="70" r="4" fill="#808080"/>
+  <circle cx="65" cy="210" r="4" fill="#808080"/>
+  <circle cx="215" cy="210" r="4" fill="#808080"/>
+</svg>

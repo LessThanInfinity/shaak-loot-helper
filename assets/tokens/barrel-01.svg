@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <!-- Shadow -->
+  <ellipse cx="140" cy="140" rx="115" ry="115" fill="rgba(0,0,0,0.12)"/>
+  <!-- Barrel body (top-down = circle) -->
+  <circle cx="140" cy="140" r="100" fill="#A0784C"/>
+  <!-- Outer metal band -->
+  <circle cx="140" cy="140" r="100" fill="none" stroke="#808080" stroke-width="6"/>
+  <!-- Inner metal band -->
+  <circle cx="140" cy="140" r="75" fill="none" stroke="#808080" stroke-width="4"/>
+  <!-- Wood plank lines (radial, top-down view) -->
+  <line x1="140" y1="40" x2="140" y2="240" stroke="#8B6914" stroke-width="2"/>
+  <line x1="60" y1="65" x2="220" y2="215" stroke="#8B6914" stroke-width="2"/>
+  <line x1="40" y1="140" x2="240" y2="140" stroke="#8B6914" stroke-width="2"/>
+  <line x1="60" y1="215" x2="220" y2="65" stroke="#8B6914" stroke-width="2"/>
+  <!-- Center plug -->
+  <circle cx="140" cy="140" r="12" fill="#6B4C3B"/>
+  <circle cx="140" cy="140" r="6" fill="#3E2723"/>
+  <!-- Wood grain highlight -->
+  <circle cx="140" cy="140" r="95" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+</svg>

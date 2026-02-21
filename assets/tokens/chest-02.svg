@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <!-- Shadow -->
+  <ellipse cx="140" cy="150" rx="120" ry="110" fill="rgba(0,0,0,0.15)"/>
+  <!-- Chest body -->
+  <rect x="55" y="75" width="170" height="110" rx="6" fill="#5C4033"/>
+  <!-- Chest lid (rounded top) -->
+  <path d="M50,110 Q50,55 140,55 Q230,55 230,110 L230,110 L50,110 Z" fill="#6B4C3B"/>
+  <!-- Metal corner pieces -->
+  <rect x="50" y="100" width="20" height="20" rx="2" fill="#708090"/>
+  <rect x="210" y="100" width="20" height="20" rx="2" fill="#708090"/>
+  <rect x="50" y="165" width="20" height="20" rx="2" fill="#708090"/>
+  <rect x="210" y="165" width="20" height="20" rx="2" fill="#708090"/>
+  <!-- Metal bands -->
+  <rect x="48" y="130" width="184" height="6" rx="2" fill="#708090" opacity="0.7"/>
+  <!-- Lid line -->
+  <line x1="50" y1="110" x2="230" y2="110" stroke="#3E2723" stroke-width="2"/>
+  <!-- Lock -->
+  <circle cx="140" cy="110" r="10" fill="#C0C0C0"/>
+  <circle cx="140" cy="110" r="5" fill="#3E2723"/>
+  <!-- Lid highlight -->
+  <path d="M70,85 Q140,65 210,85" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+</svg>
