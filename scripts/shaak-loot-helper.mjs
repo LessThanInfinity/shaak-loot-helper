@@ -1,6 +1,7 @@
 import { registerSettings } from "./settings.mjs";
 import { ensureTemplateActor } from "./template-manager.mjs";
 import { handleCanvasDrop } from "./token-placer.mjs";
+import { getDefaultChestIcon } from "./image-picker.mjs";
 
 const MODULE_ID = "shaak-loot-helper";
 
@@ -32,6 +33,8 @@ async function _ensureMacroExists() {
   );
   if (existingMacro) return;
 
+  const chestIcon = await getDefaultChestIcon();
+
   const macroCommand = `// Shaak's Loot Helper - Create Container Macro
 const module = game.modules.get("shaak-loot-helper");
 if (!module?.active) {
@@ -46,7 +49,7 @@ await createContainerActor();`;
   await Macro.create({
     name: "Create Loot Container",
     type: "script",
-    img: `modules/${MODULE_ID}/assets/tokens/chest-01.svg`,
+    img: chestIcon,
     command: macroCommand,
     flags: {
       [MODULE_ID]: {

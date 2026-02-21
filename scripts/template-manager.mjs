@@ -1,3 +1,5 @@
+import { getDefaultChestIcon } from "./image-picker.mjs";
+
 const MODULE_ID = "shaak-loot-helper";
 const TEMPLATE_FLAG = "isTemplate";
 
@@ -13,11 +15,13 @@ export async function ensureTemplateActor() {
     return templateActor;
   }
 
+  const chestIcon = await getDefaultChestIcon();
+
   console.log(`${MODULE_ID} | Creating template actor...`);
   templateActor = await Actor.create({
     name: "Default Chest (Template)",
     type: "loot",
-    img: `modules/${MODULE_ID}/assets/tokens/chest-01.svg`,
+    img: chestIcon,
     system: {
       lootSheetType: "Loot",
       details: {
@@ -29,7 +33,7 @@ export async function ensureTemplateActor() {
     prototypeToken: {
       name: "Container",
       texture: {
-        src: `modules/${MODULE_ID}/assets/tokens/chest-01.svg`
+        src: chestIcon
       },
       actorLink: false,
       disposition: 0,

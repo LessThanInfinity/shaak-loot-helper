@@ -16,7 +16,8 @@ export function registerSettings() {
     scope: "world",
     config: true,
     type: String,
-    default: ""
+    default: "",
+    filePicker: "folder"
   });
 
   game.settings.register(MODULE_ID, "placementMode", {

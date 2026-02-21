@@ -4,8 +4,38 @@ const MODULE_ID = "shaak-loot-helper";
 const DEFAULT_IMAGE_PATH = `modules/${MODULE_ID}/assets/tokens`;
 const IMAGE_EXTENSIONS = [".webp", ".png", ".jpg", ".jpeg", ".svg"];
 
+const DEFAULT_CHEST_CANDIDATES = ["chest-01.png", "chest-01.webp", "chest-01.svg"];
+
 let _imageCache = null;
 let _imageCachePath = null;
+let _defaultChestIcon = null;
+
+/**
+ * Resolve the default chest icon by checking for chest-01.png, .webp, .svg in order.
+ * Caches the result after first resolution.
+ */
+export async function getDefaultChestIcon() {
+  if (_defaultChestIcon) return _defaultChestIcon;
+
+  for (const filename of DEFAULT_CHEST_CANDIDATES) {
+    const path = `modules/${MODULE_ID}/assets/tokens/${filename}`;
+    try {
+      const result = await FilePicker.browse("data", DEFAULT_IMAGE_PATH, {
+        extensions: [`.${filename.split(".").pop()}`]
+      });
+      if (result.files.some(f => f.endsWith(filename))) {
+        _defaultChestIcon = path;
+        return _defaultChestIcon;
+      }
+    } catch {
+      // continue to next candidate
+    }
+  }
+
+  // Final fallback — return the preferred name even if not found
+  _defaultChestIcon = `modules/${MODULE_ID}/assets/tokens/chest-01.png`;
+  return _defaultChestIcon;
+}
 
 /**
  * Get a random token image from the configured folder.
@@ -16,7 +46,7 @@ export async function getRandomTokenImage() {
 
   if (images.length === 0) {
     console.warn(`${MODULE_ID} | No token images found! Using fallback.`);
-    return `modules/${MODULE_ID}/assets/tokens/chest-01.svg`;
+    return await getDefaultChestIcon();
   }
 
   const index = Math.floor(Math.random() * images.length);
@@ -79,4 +109,5 @@ export async function getAvailableImages() {
 export function invalidateImageCache() {
   _imageCache = null;
   _imageCachePath = null;
+  _defaultChestIcon = null;
 }
