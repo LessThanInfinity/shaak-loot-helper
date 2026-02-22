@@ -2,7 +2,7 @@
   "id": "shaak-loot-helper",
   "title": "Shaak's Loot Helper",
   "description": "Quickly place independent loot container tokens on scenes with random images and automatic actor creation. Designed for PF2e.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [
     {
       "name": "Shaak"
@@ -22,7 +22,7 @@
   },
   "url": "https://github.com/LessThanInfinity/shaak-loot-helper",
   "manifest": "https://raw.githubusercontent.com/LessThanInfinity/shaak-loot-helper/main/module.json",
-  "download": "https://github.com/LessThanInfinity/shaak-loot-helper/releases/download/v1.0.0/shaak-loot-helper-v1.0.0.zip",
+  "download": "https://github.com/LessThanInfinity/shaak-loot-helper/releases/download/v1.1.0/shaak-loot-helper-v1.1.0.zip",
   "esmodules": [
     "scripts/shaak-loot-helper.mjs"
   ],
