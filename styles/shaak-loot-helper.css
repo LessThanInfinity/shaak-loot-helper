@@ -46,7 +46,7 @@
   border: none;
   cursor: pointer;
   padding: 2px 4px;
-  color: var(--color-text-dark-primary, #444);
+  color: #eee;
   font-size: 12px;
   opacity: 0.7;
   transition: opacity 0.2s;
@@ -54,5 +54,30 @@
 
 .shaak-loot-folder-btn:hover {
   opacity: 1;
-  color: var(--color-text-dark-highlight, #000);
+}
+
+/* Stacked chest + plus icon */
+.shaak-loot-icon-stack {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.shaak-loot-icon-stack .fa-treasure-chest {
+  font-size: 1em;
+}
+
+.shaak-loot-icon-stack .shaak-loot-plus {
+  position: absolute;
+  top: -0.4em;
+  right: -0.5em;
+  font-size: 0.55em;
+  color: #eee;
+  transition: color 0.2s;
+}
+
+.shaak-loot-folder-btn:hover .shaak-loot-plus {
+  color: #f59e0b;
 }

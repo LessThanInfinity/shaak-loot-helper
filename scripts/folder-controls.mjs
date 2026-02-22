@@ -59,7 +59,11 @@ function _addFolderButtons(html) {
     button.className = "shaak-loot-folder-btn";
     button.type = "button";
     button.title = game.i18n.localize("SHAAK_LOOT.FolderButton.Tooltip");
-    button.innerHTML = '<i class="fas fa-treasure-chest"></i>';
+    button.innerHTML = `
+      <span class="shaak-loot-icon-stack">
+        <i class="fas fa-treasure-chest"></i>
+        <i class="fas fa-plus shaak-loot-plus"></i>
+      </span>`;
 
     button.addEventListener("click", (event) => {
       event.preventDefault();
