@@ -1,16 +1,45 @@
 const MODULE_ID = "shaak-loot-helper";
 
 /**
- * Show a dialog allowing the user to edit the container name and pick an image
- * before placement. Uses DialogV2.
- *
- * @param {string} defaultName - Pre-populated container name
- * @param {string} defaultImage - Pre-populated image path
- * @returns {Promise<{name: string, image: string}|null>} User choices, or null if cancelled
+ * Floating, draggable application for customizing a loot container before placement.
+ * Uses ApplicationV2 (not DialogV2) so we get a proper framed window with drag support.
  */
-export async function showPlacementDialog(defaultName, defaultImage) {
-  const content = `
-    <div class="shaak-loot-placement-dialog">
+class PlacementApplication extends foundry.applications.api.ApplicationV2 {
+  constructor(defaultName, defaultImage, resolve) {
+    super();
+    this._defaultName = defaultName;
+    this._defaultImage = defaultImage;
+    this._resolve = resolve;
+    this._submitted = false;
+  }
+
+  static DEFAULT_OPTIONS = {
+    id: "shaak-loot-placement",
+    tag: "form",
+    window: {
+      title: "SHAAK_LOOT.Dialog.Title",
+      resizable: false,
+    },
+    position: {
+      width: 420,
+    },
+    form: {
+      handler: PlacementApplication._handleSubmit,
+      closeOnSubmit: true,
+    },
+  };
+
+  async _prepareContext(options) {
+    return {
+      defaultName: this._defaultName,
+      defaultImage: this._defaultImage,
+    };
+  }
+
+  async _renderHTML(context, options) {
+    const div = document.createElement("div");
+    div.className = "shaak-loot-placement-dialog";
+    div.innerHTML = `
       <div class="form-group">
         <label for="dlh-name">
           ${game.i18n.localize("SHAAK_LOOT.Dialog.NameLabel")}
@@ -18,7 +47,7 @@ export async function showPlacementDialog(defaultName, defaultImage) {
         <input type="text"
                name="containerName"
                id="dlh-name"
-               value="${defaultName}"
+               value="${foundry.utils.escapeHTML(context.defaultName)}"
                autofocus
                placeholder="${game.i18n.localize("SHAAK_LOOT.Dialog.NamePlaceholder")}" />
       </div>
@@ -30,71 +59,87 @@ export async function showPlacementDialog(defaultName, defaultImage) {
           <input type="text"
                  name="containerImage"
                  id="dlh-image"
-                 value="${defaultImage}"
+                 value="${foundry.utils.escapeHTML(context.defaultImage)}"
                  placeholder="path/to/image.webp" />
           <button type="button"
                   class="dlh-file-picker-btn"
-                  data-target="dlh-image"
                   title="${game.i18n.localize("SHAAK_LOOT.Dialog.BrowseImage")}">
             <i class="fas fa-file-import"></i>
           </button>
         </div>
       </div>
       <div class="form-group">
-        <img src="${defaultImage}"
+        <img src="${foundry.utils.escapeHTML(context.defaultImage)}"
              id="dlh-image-preview"
              alt="Token Preview" />
       </div>
-    </div>
-  `;
+      <footer class="dlh-footer">
+        <button type="submit">
+          <i class="fas fa-map-pin"></i>
+          ${game.i18n.localize("SHAAK_LOOT.Dialog.PlaceButton")}
+        </button>
+        <button type="button" class="dlh-cancel-btn">
+          <i class="fas fa-times"></i>
+          ${game.i18n.localize("SHAAK_LOOT.Dialog.CancelButton")}
+        </button>
+      </footer>
+    `;
+    return div;
+  }
 
-  const result = await foundry.applications.api.DialogV2.wait({
-    window: {
-      title: game.i18n.localize("SHAAK_LOOT.Dialog.Title")
-    },
-    content: content,
-    buttons: [
-      {
-        action: "place",
-        label: game.i18n.localize("SHAAK_LOOT.Dialog.PlaceButton"),
-        icon: "fas fa-map-pin",
-        default: true,
-        callback: (event, button, dialog) => {
-          const form = button.form;
-          return {
-            name: form.elements.containerName.value || defaultName,
-            image: form.elements.containerImage.value || defaultImage
-          };
-        }
-      },
-      {
-        action: "cancel",
-        label: game.i18n.localize("SHAAK_LOOT.Dialog.CancelButton"),
-        icon: "fas fa-times",
-        callback: () => null
-      }
-    ],
-    render: (event, html) => {
-      const btn = html.querySelector(".dlh-file-picker-btn");
-      if (btn) {
-        btn.addEventListener("click", () => {
-          const targetInput = html.querySelector(`#${btn.dataset.target}`);
-          const fp = new FilePicker({
-            type: "image",
-            current: targetInput.value,
-            callback: (path) => {
-              targetInput.value = path;
-              const preview = html.querySelector("#dlh-image-preview");
-              if (preview) preview.src = path;
-            }
-          });
-          fp.render(true);
-        });
-      }
-    },
-    rejectClose: false,
-    modal: true
+  /** @override - signature is (result, content, options) per ApplicationV2 docs */
+  _replaceHTML(result, content, options) {
+    content.replaceChildren(result);
+  }
+
+  _onRender(context, options) {
+    this.element.querySelector(".dlh-file-picker-btn")?.addEventListener("click", () => {
+      const imageInput = this.element.querySelector("#dlh-image");
+      new FilePicker({
+        type: "image",
+        current: imageInput?.value ?? "",
+        callback: (path) => {
+          if (imageInput) imageInput.value = path;
+          const preview = this.element.querySelector("#dlh-image-preview");
+          if (preview) preview.src = path;
+        },
+      }).render(true);
+    });
+
+    this.element.querySelector(".dlh-cancel-btn")?.addEventListener("click", () => {
+      this.close();
+    });
+  }
+
+  static async _handleSubmit(event, form, formData) {
+    this._submitted = true;
+    const { containerName, containerImage } = formData.object;
+    this._resolve?.({
+      name: containerName || this._defaultName,
+      image: containerImage || this._defaultImage,
+    });
+    this._resolve = null;
+  }
+
+  async close(options) {
+    if (!this._submitted) {
+      this._resolve?.(null);
+      this._resolve = null;
+    }
+    return super.close(options);
+  }
+}
+
+/**
+ * Show a floating dialog allowing the user to edit the container name and pick an image
+ * before placement.
+ *
+ * @param {string} defaultName - Pre-populated container name
+ * @param {string} defaultImage - Pre-populated image path
+ * @returns {Promise<{name: string, image: string}|null>} User choices, or null if cancelled
+ */
+export async function showPlacementDialog(defaultName, defaultImage) {
+  return new Promise((resolve) => {
+    new PlacementApplication(defaultName, defaultImage, resolve).render(true);
   });
-
-  return result;
 }

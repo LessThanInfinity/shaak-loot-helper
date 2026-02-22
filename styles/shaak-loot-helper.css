@@ -26,3 +26,16 @@
   border: 1px solid #999;
   border-radius: 4px;
 }
+
+.dlh-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-dark, #ccc);
+  margin-top: 8px;
+}
+
+.dlh-footer button {
+  flex: 1;
+}
