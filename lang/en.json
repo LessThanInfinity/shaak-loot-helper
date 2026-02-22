@@ -13,5 +13,9 @@
   "SHAAK_LOOT.Dialog.ImageLabel": "Token Image",
   "SHAAK_LOOT.Dialog.BrowseImage": "Browse for image",
   "SHAAK_LOOT.Dialog.PlaceButton": "Place",
-  "SHAAK_LOOT.Dialog.CancelButton": "Cancel"
+  "SHAAK_LOOT.Dialog.CreateTitle": "Create Loot Container",
+  "SHAAK_LOOT.Dialog.CreateButton": "Create",
+  "SHAAK_LOOT.Dialog.CancelButton": "Cancel",
+  "SHAAK_LOOT.FolderButton.Tooltip": "Create Loot Container",
+  "SHAAK_LOOT.FolderContext.CreateContainer": "Create Loot Container"
 }

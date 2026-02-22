@@ -5,12 +5,13 @@ const MODULE_ID = "shaak-loot-helper";
  * Uses ApplicationV2 (not DialogV2) so we get a proper framed window with drag support.
  */
 class PlacementApplication extends foundry.applications.api.ApplicationV2 {
-  constructor(defaultName, defaultImage, resolve) {
+  constructor(defaultName, defaultImage, resolve, mode = "place") {
     super();
     this._defaultName = defaultName;
     this._defaultImage = defaultImage;
     this._resolve = resolve;
     this._submitted = false;
+    this._mode = mode;
   }
 
   static DEFAULT_OPTIONS = {
@@ -29,10 +30,17 @@ class PlacementApplication extends foundry.applications.api.ApplicationV2 {
     },
   };
 
+  get title() {
+    return this._mode === "create"
+      ? game.i18n.localize("SHAAK_LOOT.Dialog.CreateTitle")
+      : game.i18n.localize("SHAAK_LOOT.Dialog.Title");
+  }
+
   async _prepareContext(options) {
     return {
       defaultName: this._defaultName,
       defaultImage: this._defaultImage,
+      mode: this._mode,
     };
   }
 
@@ -75,8 +83,8 @@ class PlacementApplication extends foundry.applications.api.ApplicationV2 {
       </div>
       <footer class="dlh-footer">
         <button type="submit">
-          <i class="fas fa-map-pin"></i>
-          ${game.i18n.localize("SHAAK_LOOT.Dialog.PlaceButton")}
+          <i class="fas ${context.mode === "create" ? "fa-plus" : "fa-map-pin"}"></i>
+          ${game.i18n.localize(context.mode === "create" ? "SHAAK_LOOT.Dialog.CreateButton" : "SHAAK_LOOT.Dialog.PlaceButton")}
         </button>
         <button type="button" class="dlh-cancel-btn">
           <i class="fas fa-times"></i>
@@ -136,10 +144,11 @@ class PlacementApplication extends foundry.applications.api.ApplicationV2 {
  *
  * @param {string} defaultName - Pre-populated container name
  * @param {string} defaultImage - Pre-populated image path
+ * @param {"place"|"create"} [mode="place"] - Controls dialog title and button labels
  * @returns {Promise<{name: string, image: string}|null>} User choices, or null if cancelled
  */
-export async function showPlacementDialog(defaultName, defaultImage) {
+export async function showPlacementDialog(defaultName, defaultImage, mode = "place") {
   return new Promise((resolve) => {
-    new PlacementApplication(defaultName, defaultImage, resolve).render(true);
+    new PlacementApplication(defaultName, defaultImage, resolve, mode).render(true);
   });
 }

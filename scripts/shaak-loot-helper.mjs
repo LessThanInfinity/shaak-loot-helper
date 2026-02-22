@@ -2,6 +2,7 @@ import { registerSettings } from "./settings.mjs";
 import { ensureTemplateActor } from "./template-manager.mjs";
 import { handleCanvasDrop } from "./token-placer.mjs";
 import { getDefaultChestIcon } from "./image-picker.mjs";
+import { setupFolderControls } from "./folder-controls.mjs";
 
 const MODULE_ID = "shaak-loot-helper";
 
@@ -16,6 +17,7 @@ Hooks.once("ready", async () => {
   if (game.user.isGM) {
     await ensureTemplateActor();
     await _ensureMacroExists();
+    setupFolderControls();
   }
 });
 
